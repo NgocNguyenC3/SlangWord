@@ -11,7 +11,7 @@ public class SlangWord {
     private static long endTime = 0;
     private static HashMap<String, String> listSlang ;
     private static HashMap<String, Set<String>> listDefinition;
-
+    private static String[] answerList = {"A", "B", "C", "D"};
     private static Scanner scanner = new Scanner(System.in);
 
 
@@ -64,15 +64,28 @@ public class SlangWord {
                 case 8:
                     randomSlangWord();
                     break;
-                //
+                // Funny game random slang Word
                 case 9:
+                    int choose = 1;
+                    do{
+                        randomGame(true);
 
+                        printLn("Continue: 1: Yes, 0: No");
+                        choose = Integer.parseInt(scanner.nextLine());
+                    }while(choose !=0);
+
+                    break;
+                //Funny game random Definition
+                case 10:
+                    int i = 1;
+                    do{
+                        randomGame(false);
+
+                        printLn("Continue: 1: Yes, 0: No");
+                        i = Integer.parseInt(scanner.nextLine());
+                    }while(i !=0);
                     break;
                 //
-                case 10:
-
-                    break;
-                //   
                 case 11:
 
                     break;
@@ -81,16 +94,52 @@ public class SlangWord {
 
     }
 
-    private static void randomSlangWord() {
+
+    // SlangWord Game
+    // Mode true: Slang Word, Mode false: Definition
+    private static void randomGame(boolean modeGame) {
         Random generator = new Random();
 
-        List<String> key = new ArrayList<String>(listSlang.keySet());
-        String input = key.get(generator.nextInt(key.size()));
-        String output = listSlang.get(input);
+        int index = generator.nextInt(4);
+        List<String> randomList = new ArrayList<>();
+        while(randomList.size() != 4) {
+            String value = getRandomSlangWord();
+            if(!randomList.contains(value))
+                randomList.add(value);
+        }
 
+        if(modeGame)
+        gameRandomMode(randomList.get(index), listSlang.get(randomList.get(0)),
+                listSlang.get(randomList.get(1)), listSlang.get(randomList.get(2)),
+                listSlang.get(randomList.get(3)), "Slang Word");
+        else
+        gameRandomMode(listSlang.get(randomList.get(index)), randomList.get(0),
+                randomList.get(1), randomList.get(2),
+                randomList.get(3), "Definition");
+        String answer = scanner.nextLine();
+        if(answer.toUpperCase().equals(answerList[index])) {
+            printLn("Correct");
+        } else {
+            printLn("Incorrect");
+            printLn("Right Answer: " + answerList[index]);
+        }
+
+    }
+
+    // Print random Slang Word - definition
+    private static void randomSlangWord() {
+        String input = getRandomSlangWord();
+        String output = listSlang.get(input);
         printResult(input, output);
     }
 
+    // Get Random slang word
+    private static String getRandomSlangWord() {
+        Random generator = new Random();
+        List<String> key = new ArrayList<String>(listSlang.keySet());
+        return key.get(generator.nextInt(key.size()));
+    }
+    // Search by Definition
     private static void eventSearchDefinition() {
         print("Input: ");
         String definitionInput = scanner.nextLine();
@@ -101,6 +150,7 @@ public class SlangWord {
         printResultDefinition(definitionInput, output, startTime, endTime);
     }
 
+    // Search by Slang Word
     private static void eventSearchSlangWord() {
         print("Input: ");
         String slangInput = scanner.nextLine();
@@ -112,6 +162,7 @@ public class SlangWord {
 
     }
 
+    // Show menu
     private static void menuOption() {
         printLn("");
         printLn("|                        Menu Slang Word!                        |");
@@ -131,6 +182,19 @@ public class SlangWord {
         print(" option = ");
     }
 
+    // Show game
+    private static void gameRandomMode(String slangWord, String A,
+                                  String B, String C, String D , String gameMode) {
+        printLn("");
+        printLn("|-----------------------------------------------------------------");
+        printLn("|    "+gameMode +": " + slangWord);
+        printLn("| A. " + A + "\t" + "\t" + "B. " + B);
+        printLn("| C. " + C + "\t" + "\t" + "D. " + D);
+        printLn("|-----------------------------------------------------------------");
+        print(" Your answer: ");
+    }
+
+    // Read data from slang.txt
     private static void getDataFromRootFile() {
         FileInputStream fileInputStream = null;
         BufferedReader bufferedReader = null;
@@ -190,6 +254,7 @@ public class SlangWord {
         }
     }
 
+    // Print
     private static void printLn(String text) {
         System.out.println(text);
     }
@@ -213,4 +278,5 @@ public class SlangWord {
         System.out.println("Slang Word:" + output);
         printLn("Total execution time: "+ (endTime- startTime) + " nanoseconds");
     }
+    // End Utility
 }
