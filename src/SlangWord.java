@@ -32,15 +32,63 @@ public class SlangWord {
             }
 
             switch (option) {
+                // Search by slang word
                 case 1:
                     eventSearchSlangWord();
                     break;
+                // Search by definition
                 case 2:
                     eventSearchDefinition();
+                    break;
+                //
+                case 3:
+
+                    break;
+                //
+                case 4:
+
+                    break;
+                //
+                case 5:
+
+                    break;
+                //
+                case 6:
+
+                    break;
+                // Reset Data
+                case 7:
+                    getDataFromRootFile();
+                    break;
+                // Random slang word
+                case 8:
+                    randomSlangWord();
+                    break;
+                //
+                case 9:
+
+                    break;
+                //
+                case 10:
+
+                    break;
+                //   
+                case 11:
+
                     break;
             }
         }while(option != 12);
 
+    }
+
+    private static void randomSlangWord() {
+        Random generator = new Random();
+
+        List<String> key = new ArrayList<String>(listSlang.keySet());
+        String input = key.get(generator.nextInt(key.size()));
+        String output = listSlang.get(input);
+
+        printResult(input, output);
     }
 
     private static void eventSearchDefinition() {
@@ -49,7 +97,7 @@ public class SlangWord {
         startTime = System.nanoTime();
         Set<String> output = listDefinition.get(definitionInput.toUpperCase());
         endTime = System.nanoTime();
-        
+
         printResultDefinition(definitionInput, output, startTime, endTime);
     }
 
@@ -151,8 +199,13 @@ public class SlangWord {
 
     private static void printResultSlangWord(String slangInput, String output, long startTime, long endTime) {
         printLn("Slang word: " + slangInput);
-        printLn("Definition:" + output);
+        printLn("Definition: " + output);
         printLn("Total execution time: "+ (endTime- startTime) + " nanoseconds");
+    }
+
+    private static void printResult(String slangInput, String output) {
+        printLn("Slang word: " + slangInput);
+        printLn("Definition:" + output);
     }
 
     private static void printResultDefinition(String definitionInput, Set<String> output, long startTime, long endTime) {
