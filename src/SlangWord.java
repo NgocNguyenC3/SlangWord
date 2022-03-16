@@ -65,25 +65,14 @@ public class SlangWord {
                     randomSlangWord();
                     break;
                 // Funny game random slang Word
+                // Mode true: Slang Word
                 case 9:
-                    int choose = 1;
-                    do{
-                        randomGame(true);
-
-                        printLn("Continue: 1: Yes, 0: No");
-                        choose = Integer.parseInt(scanner.nextLine());
-                    }while(choose !=0);
-
+                    gameStart(true);
                     break;
                 //Funny game random Definition
+                // Mode false: Definition
                 case 10:
-                    int i = 1;
-                    do{
-                        randomGame(false);
-
-                        printLn("Continue: 1: Yes, 0: No");
-                        i = Integer.parseInt(scanner.nextLine());
-                    }while(i !=0);
+                    gameStart(false);
                     break;
                 //
                 case 11:
@@ -92,6 +81,16 @@ public class SlangWord {
             }
         }while(option != 12);
 
+    }
+
+    // Mode true: Slang Word, Mode false: Definition
+    private static void gameStart(boolean mode) {
+        int i = 1;
+        do{
+            randomGame(mode);
+            printLn("Continue: 1: Yes, 0: No");
+            i = Integer.parseInt(scanner.nextLine());
+        }while(i !=0);
     }
 
 
@@ -165,6 +164,7 @@ public class SlangWord {
     // Show menu
     private static void menuOption() {
         printLn("");
+        printLn("|----------------------------------------------------------------|");
         printLn("|                        Menu Slang Word!                        |");
         printLn("|----------------------------------------------------------------|");
         printLn("| 1. Search by Slang Word                                        |");
@@ -179,6 +179,7 @@ public class SlangWord {
         printLn("|10. Funny game! Choose the correct slang word for the definition|");
         printLn("|11. Save data                                                   |");
         printLn("|12. Exit                                                        |");
+        printLn("|----------------------------------------------------------------|");
         print(" option = ");
     }
 
