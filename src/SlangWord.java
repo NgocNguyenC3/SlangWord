@@ -1,17 +1,20 @@
 import java.io.*;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.Set;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class SlangWord {
     private static String fileDataPath = "slang.txt";
     private static String fileDataSlangPackUpPath = "slang_back_up.txt";
     private static String fileDataDefinitionPackUpPath = "definition.txt";
     private static String fileHistory = "history.txt";
-
+    private static long startTime = 0;
+    private static long endTime = 0;
     private static HashMap<String, String> listSlang ;
     private static HashMap<String, Set<String>> listDefinition;
+
+    private static Scanner scanner = new Scanner(System.in);
+
+
     public static void main(String args[]) {
         getDataFromRootFile();
 
@@ -19,7 +22,46 @@ public class SlangWord {
     }
 
     private static void menu() {
-        menuOption();
+        int option = 0;
+        do{
+            menuOption();
+            option = Integer.parseInt(scanner.nextLine());
+            if(option < 0 || option > 12) {
+                printLn("Wrong option!");
+                continue;
+            }
+
+            switch (option) {
+                case 1:
+                    eventSearchSlangWord();
+                    break;
+                case 2:
+                    eventSearchDefinition();
+                    break;
+            }
+        }while(option != 12);
+
+    }
+
+    private static void eventSearchDefinition() {
+        print("Input: ");
+        String definitionInput = scanner.nextLine();
+        startTime = System.nanoTime();
+        Set<String> output = listDefinition.get(definitionInput.toUpperCase());
+        endTime = System.nanoTime();
+        
+        printResultDefinition(definitionInput, output, startTime, endTime);
+    }
+
+    private static void eventSearchSlangWord() {
+        print("Input: ");
+        String slangInput = scanner.nextLine();
+        startTime = System.nanoTime();
+        String output = listSlang.get(slangInput);
+        endTime = System.nanoTime();
+
+        printResultSlangWord(slangInput, output, startTime, endTime);
+
     }
 
     private static void menuOption() {
@@ -37,6 +79,8 @@ public class SlangWord {
         printLn("| 9. Funny game! Choose the correct definition for the slang word|");
         printLn("|10. Funny game! Choose the correct slang word for the definition|");
         printLn("|11. Save data                                                   |");
+        printLn("|12. Exit                                                        |");
+        print(" option = ");
     }
 
     private static void getDataFromRootFile() {
@@ -100,5 +144,20 @@ public class SlangWord {
 
     private static void printLn(String text) {
         System.out.println(text);
+    }
+    private static void print(String text) {
+        System.out.print(text);
+    }
+
+    private static void printResultSlangWord(String slangInput, String output, long startTime, long endTime) {
+        printLn("Slang word: " + slangInput);
+        printLn("Definition:" + output);
+        printLn("Total execution time: "+ (endTime- startTime) + " nanoseconds");
+    }
+
+    private static void printResultDefinition(String definitionInput, Set<String> output, long startTime, long endTime) {
+        printLn("Definition : " + definitionInput);
+        System.out.println("Slang Word:" + output);
+        printLn("Total execution time: "+ (endTime- startTime) + " nanoseconds");
     }
 }
