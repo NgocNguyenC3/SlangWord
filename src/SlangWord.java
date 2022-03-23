@@ -45,7 +45,7 @@ public class SlangWord {
         getDataFile(false);
     }
 
-    // Function get Data from slang_back_up.txt (true) or definition.txt(false)
+    // Get Data from slang_back_up.txt (true) or definition.txt(false)
     private static void getDataFile(Boolean isSlangWord) {
         FileInputStream fileInputStream = null;
         BufferedReader bufferedReader = null;
