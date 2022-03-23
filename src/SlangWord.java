@@ -157,12 +157,23 @@ public class SlangWord {
             printLn("Cant find " + slangInput);
             return;
         }
-        //Map <Def, Set<SlangWord>>
-        deleteDefinition(slangInput, output);
-        //Map<SlangWord, def>
-        listSlang.remove(slangInput);
+        printLn("Do you want to delete this? 1: yes,  else : No");
+        print("Choose: ");
+        String choose = scanner.nextLine();
+        scanner.useDelimiter("\n");
+        try {
+            if(Integer.parseInt(choose) == 1) {
+                //Map <Def, Set<SlangWord>>
+                deleteDefinition(slangInput, output);
+                //Map<SlangWord, def>
+                listSlang.remove(slangInput);
 
-        printLn("Successfully, you should save changes data.");
+                printLn("Successfully, you should save changes data.");
+            }
+        } catch (Exception ex) {
+            return;
+        }
+
     }
 
     // Edit data
@@ -283,7 +294,7 @@ public class SlangWord {
         print("Slang Word: ");
         String key = scanner.nextLine();
         if(checkExits(key)) {
-            printLn("SlangWord is exits");
+            printLn("SlangWord is existing");
             return;
         }
         print("Definition: ");
@@ -368,13 +379,13 @@ public class SlangWord {
         }
 
         if(modeGame)
-        gameRandomMode(randomList.get(index), listSlang.get(randomList.get(0)),
-                listSlang.get(randomList.get(1)), listSlang.get(randomList.get(2)),
-                listSlang.get(randomList.get(3)), "Slang Word");
+            gameRandomMode(randomList.get(index), listSlang.get(randomList.get(0)),
+                    listSlang.get(randomList.get(1)), listSlang.get(randomList.get(2)),
+                    listSlang.get(randomList.get(3)), "Slang Word");
         else
-        gameRandomMode(listSlang.get(randomList.get(index)), randomList.get(0),
-                randomList.get(1), randomList.get(2),
-                randomList.get(3), "Definition");
+            gameRandomMode(listSlang.get(randomList.get(index)), randomList.get(0),
+                    randomList.get(1), randomList.get(2),
+                    randomList.get(3), "Definition");
         String answer = scanner.nextLine();
         if(answer.toUpperCase().equals(answerList[index])) {
             printLn("Correct");
@@ -409,9 +420,9 @@ public class SlangWord {
         printResultDefinition(definitionInput, output, startTime, endTime);
 
         if(output != null)
-        for(String i: output) {
-            saveHistorySlangWord(i);
-        }
+            for(String i: output) {
+                saveHistorySlangWord(i);
+            }
     }
 
     // Search by Slang Word
@@ -480,7 +491,7 @@ public class SlangWord {
 
     // Show game
     private static void gameRandomMode(String slangWord, String A,
-                                  String B, String C, String D , String gameMode) {
+                                       String B, String C, String D , String gameMode) {
         printLn("");
         printLn("|-----------------------------------------------------------------");
         printLn("|    "+gameMode +": " + slangWord);
