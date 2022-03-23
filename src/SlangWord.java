@@ -309,12 +309,14 @@ public class SlangWord {
                 Set<String> set = listDefinition.get(i.toUpperCase());
                 if(set == null) {
                     listDefinition.put(i.toUpperCase(), new HashSet<>());
-
                 }
                 listDefinition.get(i.toUpperCase(Locale.ROOT)).add(key);
             }
         } else {
-            listDefinition.put(data.toUpperCase(), new HashSet<>());
+            Set<String> set = listDefinition.get(data.toUpperCase().toUpperCase());
+            if(set==null)
+                listDefinition.put(data.toUpperCase(), new HashSet<>());
+
             listDefinition.get(data.toUpperCase()).add(key);
         }
 
