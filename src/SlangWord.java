@@ -282,6 +282,10 @@ public class SlangWord {
     private static void addNewWord() {
         print("Slang Word: ");
         String key = scanner.nextLine();
+        if(checkExits(key)) {
+            printLn("SlangWord is exits");
+            return;
+        }
         print("Definition: ");
         String data = scanner.nextLine();
         listSlang.put(key,data);
@@ -298,9 +302,19 @@ public class SlangWord {
                 }
                 listDefinition.get(i.toUpperCase(Locale.ROOT)).add(key);
             }
+        } else {
+            listDefinition.put(data.toUpperCase(), new HashSet<>());
+            listDefinition.get(data.toUpperCase()).add(key);
         }
 
         printLn("Successfully, you should save changes data.");
+    }
+
+    private static boolean checkExits(String key) {
+        if(listSlang.get(key) != null) {
+            return true;
+        };
+        return false;
     }
 
     // History search slang word, Slangword - time
