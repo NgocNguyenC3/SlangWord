@@ -394,6 +394,7 @@ public class SlangWord {
 
         printResultDefinition(definitionInput, output, startTime, endTime);
 
+        if(output != null)
         for(String i: output) {
             saveHistorySlangWord(i);
         }
