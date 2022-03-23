@@ -393,6 +393,10 @@ public class SlangWord {
         endTime = System.nanoTime();
 
         printResultDefinition(definitionInput, output, startTime, endTime);
+
+        for(String i: output) {
+            saveHistorySlangWord(i);
+        }
     }
 
     // Search by Slang Word
