@@ -18,21 +18,24 @@ public class SlangWord {
     private static Scanner scanner = new Scanner(System.in);
 
 
+
     public static void main(String args[]) {
         File fileSlangWord = new File(fileDataSlangPackUpPath);
         File fileDefinition = new File(fileDataDefinitionPackUpPath);
 
         // Get Data
         if(!fileSlangWord.exists() || !fileDefinition.exists()) {
+            // Get raw data
             getDataFromRootFile();
         } else {
+            // Get MyData
             getDataBackUp();
         }
 
         menu();
     }
 
-    // Get My Data
+    // Get Data
     private static void getDataBackUp() {
         listSlang = new HashMap<String, String>();
         listDefinition = new HashMap<String, Set<String>>();
@@ -159,7 +162,7 @@ public class SlangWord {
         //Map<SlangWord, def>
         listSlang.remove(slangInput);
 
-        printLn("Successfully");
+        printLn("Successfully, you should save changes data.");
     }
 
     // Edit data
@@ -181,7 +184,7 @@ public class SlangWord {
         saveEditDefinition(slangInput, def);
         listSlang.put(slangInput, def);
 
-        printLn("Successfully");
+        printLn("Successfully, you should save changes data.");
     }
 
     // Save new data Map <Def, Set<SlangWord>>
@@ -297,7 +300,7 @@ public class SlangWord {
             }
         }
 
-        printLn("Successfully");
+        printLn("Successfully, you should save changes data.");
     }
 
     // History search slang word, Slangword - time
